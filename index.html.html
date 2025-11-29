@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>One Page Portfolio — Responsive</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --blue:#0b57b7;
+      --dark:#0b2340;
+      --accent:#ff7a45;
+      --muted:#efefef;
+      --card:#ffffff;
+      --radius:0.6rem;
+      --max-w:1000px;
+      --gap:1.2rem;
+      font-size:16px; /* base for rem calculations */
+    }
+
+    /* Mobile-first layout */
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;color:var(--dark);background:linear-gradient(180deg,var(--muted),#f7f7f7);}
+    a{color:inherit;text-decoration:none}
+
+    .container{max-width:var(--max-w);margin:0 auto;padding:1.2rem;}
+
+    /* Header - use flexbox */
+    header{background:var(--blue);color:#fff;padding:.6rem 1rem;border-radius:.3rem;} 
+    .header-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;max-width:var(--max-w);margin:0 auto;}
+    .logo{font-weight:800;font-size:1rem}
+    nav{display:flex;gap:0.6rem;align-items:center}
+    nav a{padding:.45rem .7rem;border-radius:.4rem;font-weight:600;opacity:.95;transition:transform .2s ease,background .18s ease}
+    nav a:hover{background:rgba(255,255,255,0.12);transform:translateY(-3px)}
+
+    /* Hero - flex layout; profile image right */
+    .hero{display:flex;flex-direction:column;gap:1rem;padding:2rem 0;align-items:center}
+    .hero-inner{display:flex;flex-direction:column;gap:1rem;width:100%}
+    .intro{flex:1}
+    .hi{font-size:1.4rem;font-weight:800;margin:0}
+    .title{font-size:2.4rem;font-weight:800;margin:.2rem 0;line-height:1}
+
+    /* animated highlight for profession */
+    .title .highlight{display:inline-block;padding:.1rem .25rem;border-radius:.3rem;color:var(--dark);animation:colorShift 3s infinite linear}
+    @keyframes colorShift{
+      0%{background:var(--accent);color:#fff}
+      50%{background:#ffd2bc;color:var(--dark)}
+      100%{background:var(--accent);color:#fff}
+    }
+
+    .hero-right{display:flex;justify-content:center;align-items:center}
+    .avatar{width:34vw;max-width:180px;height:34vw;max-height:180px;border-radius:50%;background:linear-gradient(135deg,#cfe7ff, #f0f6ff);display:flex;justify-content:center;align-items:center;border:6px solid rgba(11,87,183,0.12)}
+    .avatar svg{width:72%;height:72%}
+
+    /* About */
+    section{background:transparent;padding:1.2rem 0}
+    .card{background:var(--card);padding:1rem;border-radius:var(--radius);box-shadow:0 6px 18px rgba(2,10,30,0.04)}
+
+    .about p{margin:0;font-size:0.95rem;line-height:1.6;color:#333}
+
+    /* Skills - use CSS Grid */
+    .skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--gap);margin-top:.8rem}
+    .skill{padding:.9rem;border-radius:.6rem;background:linear-gradient(180deg,#fff,#fbfbfb);text-align:center;font-weight:600;border:2px solid rgba(11,87,183,0.06);transition:transform .25s ease,box-shadow .25s ease}
+    .skill:hover{transform:translateY(-6px);box-shadow:0 10px 24px rgba(11,87,183,0.08)}
+    .skill small{display:block;font-weight:400;margin-top:.45rem;color:#666;font-size:.85rem}
+
+    /* Projects - grid */
+    .projects-grid{display:grid;grid-template-columns:1fr;gap:1rem;margin-top:1rem}
+    .project{min-height:8rem;border-radius:.6rem;padding:1rem;border:1px solid rgba(2,10,30,0.06);background:linear-gradient(180deg,#fff,#fafafa);transition:transform .2s ease,box-shadow .2s ease}
+    .project:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(2,10,30,0.05)}
+    .project h4{margin:.2rem 0;font-size:1rem;text-align:center}
+    .project p{font-size:.85rem;text-align:center;color:#666}
+
+    /* Contact form */
+    .contact-wrap{display:flex;justify-content:center;padding:1rem}
+    form{width:100%;max-width:320px}
+    label{display:block;font-size:.85rem;margin:0.3rem 0 0.2rem}
+    input,textarea{width:100%;padding:.55rem;border-radius:.35rem;border:1px solid rgba(2,10,30,0.12);font-size:.95rem}
+    textarea{min-height:90px;resize:vertical}
+    .btn{display:inline-block;background:var(--blue);color:#fff;padding:.6rem .9rem;border-radius:.45rem;border:0;font-weight:700;margin-top:.6rem;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease}
+    .btn:hover{transform:translateY(-3px);box-shadow:0 8px 18px rgba(11,87,183,0.18)}
+
+    footer{margin-top:1.2rem;padding:1rem;text-align:center;color:#fff;background:var(--blue);border-radius:.3rem}
+
+    /* Small helper */
+    .section-title{font-weight:700;margin:0 0 .6rem;font-size:1.05rem}
+
+    /* Smooth reveal animations */
+    .reveal{opacity:0;transform:translateY(10px);animation:reveal .8s forwards;animation-delay:.15s}
+    .reveal.delay{animation-delay:.28s}
+    @keyframes reveal{to{opacity:1;transform:translateY(0)}}
+
+    /* Scroll to top button */
+    .to-top{position:fixed;right:1rem;bottom:1rem;background:var(--blue);color:#fff;padding:.5rem;border-radius:.5rem;border:2px solid #07386f;cursor:pointer;display:none}
+
+    /* Desktop/tablet changes */
+    @media (min-width:560px){
+      .hero-inner{flex-direction:row;align-items:center}
+      .hero{padding:2.4rem 0}
+      .title{font-size:3rem}
+      .hi{font-size:1.6rem}
+      .skills-grid{grid-template-columns:repeat(3,1fr)}
+      .projects-grid{grid-template-columns:repeat(2,1fr)}
+      .avatar{max-width:220px;max-height:220px;width:220px;height:220px}
+    }
+
+    @media (min-width:900px){
+      header{padding:0.9rem 1.4rem}
+      .container{padding:2rem}
+      .title{font-size:4rem}
+      .hero-inner{gap:2rem}
+      .skills-grid{grid-template-columns:repeat(4,1fr)}
+      .projects-grid{grid-template-columns:repeat(2,1fr)}
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner container">
+      <div class="logo">My Portfolio</div>
+      <nav aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero" id="home">
+      <div class="hero-inner reveal">
+        <div class="intro">
+          <p class="hi">Hi, I am</p>
+          <h1 class="title">Full Stack <span class="highlight">Developer</span></h1>
+          <p style="max-width:55ch;font-size:0.98rem;color:#444">Building modern web applications with MERN stack. I love clean UI, thoughtful UX and small performant code.
+          </p>
+        </div>
+        <div class="hero-right">
+          <div class="avatar" aria-hidden="true">
+            <!-- simple svg avatar as placeholder -->
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+              <g transform="translate(10,10)">
+                <circle cx="90" cy="30" r="28" fill="#2b7bbf" opacity="0.85"/>
+                <rect x="35" y="70" rx="18" ry="18" width="110" height="90" fill="#2b7bbf" opacity="0.9"/>
+                <rect x="60" y="95" width="60" height="10" fill="#fff" opacity="0.12"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about reveal delay">
+      <h3 class="section-title">About Me</h3>
+      <div class="card" style="margin-top:.6rem">
+        <p>Hi! My name is John Doe and I'm currently learning web development. This is a simple portfolio demonstration that uses Flexbox, CSS Grid and animations. I enjoy solving problems, building small projects and learning new tools in front-end and back-end development.</p>
+      </div>
+    </section>
+
+    <section id="skills" class="reveal">
+      <h3 class="section-title">My Skills</h3>
+      <div class="skills-grid" style="margin-top:.6rem">
+        <div class="skill card">HTML <small>Beginner</small></div>
+        <div class="skill card">CSS <small>Beginner</small></div>
+        <div class="skill card">JavaScript <small>Learning</small></div>
+        <div class="skill card">React <small>Learning</small></div>
+        <div class="skill card">Node.js <small>Basics</small></div>
+        <div class="skill card">Git <small>Comfortable</small></div>
+      </div>
+    </section>
+
+    <section id="projects" class="reveal delay">
+      <h3 class="section-title">My Projects</h3>
+      <div class="projects-grid">
+        <article class="project card">
+          <h4>Project 1</h4>
+          <p>A simple HTML & CSS webpage.</p>
+        </article>
+        <article class="project card">
+          <h4>Project 2</h4>
+          <p>Another awesome mini project.</p>
+        </article>
+        <article class="project card">
+          <h4>Project 3</h4>
+          <p>Small React app demo.</p>
+        </article>
+        <article class="project card">
+          <h4>Project 4</h4>
+          <p>API + Node.js integration.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" class="reveal" style="margin-top:1rem">
+      <h3 class="section-title">Contact Me</h3>
+      <div class="contact-wrap">
+        <form id="contactForm" class="card" aria-label="Contact form" onsubmit="return false">
+          <label for="name">Name:</label>
+          <input id="name" type="text" placeholder="Enter your name" required>
+
+          <label for="email">Email:</label>
+          <input id="email" type="email" placeholder="Enter your email" required>
+
+          <label for="message">Message:</label>
+          <textarea id="message" placeholder="Write your message"></textarea>
+
+          <button class="btn" id="sendBtn">Send</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div>© 2025 John Doe. All rights reserved. — Built with ❤️ using Flexbox & Grid</div>
+  </footer>
+
+  <button class="to-top" id="toTop">↑ Top</button>
+
+  <script>
+    // small JS for interactivity (no backend)
+    const form = document.getElementById('contactForm');
+    const sendBtn = document.getElementById('sendBtn');
+    sendBtn.addEventListener('click', (e)=>{
+      e.preventDefault();
+      // simple validation
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      if(!name || !email){
+        alert('Please enter name and email.');
+        return;
+      }
+      // show fake success and clear
+      alert('Thanks '+name+" — your message was sent (demo).");
+      form.reset();
+    });
+
+    // reveal on scroll (simple)
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.style.animationPlayState = 'running';
+          entry.target.classList.remove('reveal');
+          entry.target.style.opacity = 1;
+        }
+      })
+    },{threshold:0.12});
+    reveals.forEach(r=>io.observe(r));
+
+    // scroll to top
+    const toTop = document.getElementById('toTop');
+    window.addEventListener('scroll', ()=>{
+      if(window.scrollY>400) toTop.style.display='block'; else toTop.style.display='none';
+    });
+    toTop.addEventListener('click', ()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+  </script>
+</body>
+</html>
